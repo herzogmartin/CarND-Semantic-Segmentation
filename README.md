@@ -28,15 +28,15 @@ python main.py
 
 ### Sample images
 All images can be found in `runs.zip`.
-![png](sample_preds/um_000000.png) 
-![png](sample_preds/um_000005.png) 
-![png](sample_preds/um_000006.png) 
-![png](sample_preds/um_000013.png) 
-![png](sample_preds/um_000024.png) 
-![png](sample_preds/um_000028.png) 
-![png](sample_preds/um_000032.png) 
-![png](sample_preds/um_000034.png) 
-![png](sample_preds/um_000069.png) 
-![png](sample_preds/uu_000005.png) 
-![png](sample_preds/uu_000009.png) 
+![png](samples/um_000000.png) 
+![png](samples/um_000005.png) 
+![png](samples/um_000006.png) 
+![png](samples/um_000013.png) 
+![png](samples/um_000024.png) 
+![png](samples/um_000028.png) 
+![png](samples/um_000032.png) 
+![png](samples/um_000034.png) 
+![png](samples/um_000069.png) 
+![png](samples/uu_000005.png) 
+![png](samples/uu_000009.png) 
 
