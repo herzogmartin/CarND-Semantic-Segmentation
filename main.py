@@ -113,7 +113,7 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
     sess.run(tf.global_variables_initializer())
     for epoch in range(epochs):
         batch = 0
-        print("Epoch {}/{}...".format(epoch, epochs))
+        print("Epoch {}/{}...".format(epoch+1, epochs))
         for image, label in get_batches_fn(batch_size):
             batch += 1
             #do the training
@@ -135,6 +135,8 @@ def run():
     data_dir = './data'
     runs_dir = './runs'
     tests.test_for_kitti_dataset(data_dir)
+    epochs = 10
+    batch_size = 16
 
     # Download pretrained vgg model
     helper.maybe_download_pretrained_vgg(data_dir)
@@ -152,12 +154,21 @@ def run():
         # OPTIONAL: Augment Images for better results
         #  https://datascience.stackexchange.com/questions/5224/how-to-prepare-augment-images-for-neural-network
 
-        # TODO: Build NN using load_vgg, layers, and optimize function
+        # Build NN using load_vgg, layers, and optimize function
+        image_input, keep_prob, layer3_out, layer4_out, layer7_out = load_vgg(sess, vgg_path)
+        nn_last_layer = layers(layer3_out, layer4_out, layer7_out, num_classes)
 
-        # TODO: Train NN using the train_nn function
+        correct_label = tf.placeholder(dtype = tf.float32, shape = (None, None, None, num_classes))
+        learning_rate = tf.placeholder(dtype = tf.float32)
+        reshaped_logits, train_op, cross_entropy_loss = optimize(nn_last_layer, correct_label, learning_rate, num_classes)
 
-        # TODO: Save inference data using helper.save_inference_samples
+        # Train NN using the train_nn function
+        train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, image_input,
+                correct_label, keep_prob, learning_rate)
+
+        # Save inference data using helper.save_inference_samples
         #  helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
+        helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, reshaped_logits, keep_prob, image_input)
 
         # OPTIONAL: Apply the trained model to a video
 
